@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>✨ QUiZiNAC™ Jeopardy! — POPPING with Personality! ✨</title>
+
+<!-- Google Fonts for a vibrant, fun feel -->
+<link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Luckiest+Guy&display=swap" rel="stylesheet" />
+
+<style>
+  /* General Body Styles - Popping with Bright Yellow, Lavender, Teal */
+  body {
+    margin: 0;
+    padding: 0;
+    /* Vibrant gradient background with animation: Bright Yellow, Lavender, Teal */
+    background: linear-gradient(135deg, #FFDE21, #D3D3FF, #00FFFF); /* Bright Yellow, Lavender, Teal */
+    font-family: 'Comic Neue', cursive;
+    color: #222; /* Dark text for contrast */
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    animation: backgroundShift 15s infinite alternate ease-in-out; /* Smooth, pulsing background shift */
+  }
+
+  /* Keyframe animation for background movement */
+  @keyframes backgroundShift {
+    0% { background-position: 0% 50%; background-size: 200% 200%; }
+    50% { background-position: 100% 50%; background-size: 250% 250%; }
+    100% { background-position: 0% 50%; background-size: 200% 200%; }
+  }
+
+  /* Header Styling - Bold and Exciting with Teal */
+  header {
+    background-color: #00BFBF; /* Darker Teal */
+    color: #FFFDEA; /* Lighter Yellow for contrast */
+    text-align: center;
+    padding: 1.2rem 0;
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 3.2rem;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); /* Pronounced shadow */
+    text-shadow: 3px 3px 5px rgba(0,0,0,0.3); /* Text shadow for pop */
+    display: flex; /* Use flexbox for alignment of elements */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center text horizontally initially */
+    gap: 15px; /* Space between logo elements */
+  }
+
+  /* Quizzy Mascot (SVG embedded) Styling in Header */
+  header .quizzy-svg {
+    height: 70px;
+    animation: wave 1.2s infinite ease-in-out; /* Lively wave animation */
+  }
+
+  /* Q-Cube Logo Styling in Header - STATIC & VISIBLE */
+  header .q-cube-svg {
+    height: 65px; /* Adjusted size to be prominent */
+    min-width: 65px; /* Ensure it has minimum width */
+    display: block; /* Ensure it's not inline for proper sizing */
+  }
+
+  /* Keyframe animation for Quizzy's subtle wave */
+  @keyframes wave {
+    0%, 100% { transform: rotate(0deg);}
+    50% { transform: rotate(8deg);} /* More pronounced tilt */
+  }
+
+  /* Jeopardy Game Container */
+  .jeopardy-game {
+    flex-grow: 1; /* Allows it to take up available space */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+
+  /* Game Controls (Player Management, Manual Points) */
+  .game-controls {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 20px;
+    margin-bottom: 20px;
+    background-color: #D3D3FF; /* Lavender background */
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    border: 2px solid #B5B5FF;
+    justify-content: center; /* Center controls */
+    width: 100%;
+    max-width: 900px;
+  }
+
+  .player-management, .manual-points, .turn-control { /* Added turn-control */
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .game-controls input[type="text"],
+  .game-controls input[type="number"] {
+    padding: 10px;
+    border: 2px solid #8A8AFF; /* Darker lavender border */
+    border-radius: 8px;
+    font-family: 'Comic Neue', cursive;
+    font-size: 1rem;
+  }
+
+  .game-controls button {
+    padding: 10px 15px;
+    background-color: #00BFBF; /* Teal button */
+    color: #FFFDEA; /* Light yellow text */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 1rem;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+  }
+
+  .game-controls button:hover {
+    background-color: #008080; /* Darker teal */
+    transform: translateY(-2px);
+  }
+
+
+  /* Scoreboard Display */
+  .scoreboard-container {
+    background-color: #FFECB3; /* Sunny Yellow */
+    color: #004D4D; /* Dark Teal */
+    font-family: 'Luckiest Guy', cursive;
+    padding: 15px 25px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    border: 2px solid #FFDE21; /* Bright yellow border */
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 900px;
+    text-align: center;
+  }
+
+  .scoreboard-container h2 {
+    margin-top: 0;
+    font-size: 2.2rem;
+    color: #004D4D;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+  }
+
+  .current-player {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #000080; /* Dark Blue */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+  }
+
+  .scoreboard {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-family: 'Comic Neue', cursive;
+    font-size: 1.3rem;
+  }
+
+  .scoreboard li {
+    padding: 5px 0;
+    border-bottom: 1px dashed #00BFBF; /* Teal dashed line */
+  }
+
+  .scoreboard li:last-child {
+    border-bottom: none;
+  }
+
+
+  /* Jeopardy Board */
+  .jeopardy-board {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Responsive columns */
+    gap: 10px;
+    width: 100%;
+    max-width: 1200px;
+    background-color: #000080; /* Dark Blue Jeopardy Board Background */
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+    padding: 15px;
+  }
+
+  /* Jeopardy Category Headers */
+  .jeopardy-category {
+    background-color: #0000CD; /* Medium Blue */
+    color: #FFFDEA; /* Light Yellow */
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 1.2rem;
+    padding: 10px 5px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    word-break: break-word; /* Allow long category names to wrap */
+    line-height: 1.2;
+  }
+
+  /* Jeopardy Question Cells */
+  .jeopardy-cell {
+    background-color: #0000FF; /* Bright Blue */
+    color: #FFFDEA; /* Light Yellow */
+    font-family: 'Comic Neue', cursive;
+    font-size: 1.8rem;
+    font-weight: bold;
+    padding: 15px;
+    text-align: center;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    border: 2px solid #FFFDEA; /* Yellow border */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80px;
+  }
+
+  .jeopardy-cell:hover:not(.answered) {
+    background-color: #00BFFF; /* Lighter Blue on hover */
+    transform: scale(1.05);
+  }
+
+  .jeopardy-cell.answered {
+    background-color: #808080; /* Grey when answered */
+    color: #B0B0B0;
+    cursor: not-allowed;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Question Display Overlay (for Quiz & Trivia) */
+  .question-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85); /* Dark overlay */
+    color: #FFFDEA;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .question-content {
+    background-color: #00BFBF; /* Teal background for question */
+    border-radius: 15px;
+    padding: 40px;
+    max-width: 700px;
+    width: 90%;
+    height: auto; /* Allow height to adjust to content */
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 4px solid #FFDE21; /* Bright Yellow border */
+    animation: popIn 0.5s ease-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  @keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .question-content h3 {
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 2.5rem;
+    margin-bottom: 0;
+    color: #FFFDEA; /* Light Yellow */
+    text-shadow: 2px 2px #004D4D; /* Dark Teal shadow */
+    word-break: break-word; /* Ensure long questions wrap */
+  }
+
+  .question-content .options {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .question-content label {
+    display: flex;
+    align-items: center;
+    background-color: #B5B5FF; /* Lavender */
+    color: #333;
+    padding: 15px 20px;
+    margin: 0 auto;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    width: fit-content;
+    max-width: 90%;
+    border: 2px solid #8A8AFF; /* Darker Lavender border */
+  }
+
+  .question-content label:hover {
+    background-color: #8A8AFF; /* Darker Lavender on hover */
+    color: #FFFDEA;
+    transform: translateY(-2px);
+  }
+
+  .question-content input[type="radio"] {
+    margin-right: 10px;
+    transform: scale(1.3);
+    vertical-align: middle;
+    accent-color: #00FFFF; /* Teal accent */
+    flex-shrink: 0;
+  }
+
+  .question-content button {
+    margin-top: 30px;
+    padding: 15px 40px;
+    background: linear-gradient(to right, #FFDE21, #FFECB3); /* Yellow gradient */
+    color: #004D4D; /* Dark Teal */
+    border: none;
+    border-radius: 30px;
+    font-size: 1.3rem;
+    cursor: pointer;
+    font-family: 'Luckiest Guy', cursive;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+  }
+
+  .question-content button:hover {
+    background: linear-gradient(to right, #FFECB3, #FFDE21); /* Reverse gradient on hover */
+    transform: scale(1.05) translateY(-3px);
+  }
+
+  /* Feedback Message */
+  .feedback-message {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #FFFDEA; /* Light yellow */
+    animation: fadeIn 0.5s ease-out;
+  }
+
+  .feedback-message.correct {
+    color: #90EE90; /* Light Green */
+  }
+
+  .feedback-message.incorrect {
+    color: #FF6347; /* Tomato Red */
+  }
+
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  /* Custom Alert/Message Box (also used for Event Overlay) */
+  .custom-message-box {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Dark overlay */
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+  }
+
+  .custom-message-content {
+    background-color: #B5B5FF; /* Lavender */
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    font-family: 'Comic Neue', cursive;
+    font-size: 1.3rem;
+    color: #333;
+    max-width: 400px;
+    width: 90%;
+    border: 2px solid #8A8AFF; /* Darker Lavender border */
+  }
+
+  .custom-message-content button {
+    margin-top: 20px;
+    padding: 10px 25px;
+    background-color: #00BFBF; /* Teal */
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+  }
+
+  .custom-message-content button:hover {
+    background-color: #008080; /* Darker Teal */
+  }
+
+
+  /* Footer Styling - Consistent Vibrant Theme with Teal */
+  footer {
+    text-align: center;
+    padding: 1rem 0;
+    background-color: #004D4D; /* Darker Teal */
+    color: #FFFDEA; /* Light Yellow */
+    font-family: 'Comic Neue', cursive;
+    position: relative;
+    width: 100%;
+    margin-top: auto;
+    box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+  }
+
+  /* Quizzy Mascot (SVG embedded) Styling in Footer */
+  footer .quizzy-svg {
+    height: 40px;
+    vertical-align: middle;
+    margin-left: 10px;
+    animation: wave 1.2s infinite ease-in-out;
+  }
+
+  /* Q-Cube Logo Styling in Footer - STATIC & VISIBLE */
+  footer .q-cube-svg {
+    height: 30px;
+    vertical-align: middle;
+    margin-right: 10px;
+    display: inline-block;
+  }
+
+  /* Responsive Adjustments for Tablets */
+  @media (max-width: 768px) {
+    header {
+      font-size: 2.5rem;
+    }
+    header .quizzy-svg {
+      height: 55px;
+    }
+    header .q-cube-svg {
+      height: 45px;
+    }
+    .game-controls {
+      flex-direction: column;
+      align-items: center;
+    }
+    .player-management, .manual-points {
+      flex-direction: column;
+      gap: 5px;
+    }
+    .jeopardy-category {
+      font-size: 1rem;
+      min-height: 50px;
+      padding: 8px 3px;
+    }
+    .jeopardy-cell {
+      font-size: 1.5rem;
+      padding: 10px;
+      min-height: 70px;
+    }
+    .scoreboard-container h2 {
+      font-size: 2rem;
+    }
+    .current-player {
+      font-size: 1.3rem;
+    }
+    .scoreboard {
+      font-size: 1.2rem;
+    }
+    .question-content h3 {
+      font-size: 2rem;
+    }
+    .question-content label {
+      font-size: 1.1rem;
+      padding: 12px 15px;
+    }
+    .question-content button {
+      padding: 12px 30px;
+      font-size: 1.1rem;
+    }
+    .feedback-message {
+      font-size: 1.3rem;
+    }
+  }
+
+  /* Responsive Adjustments for Mobile Phones */
+  @media (max-width: 480px) {
+    header {
+      font-size: 1.8rem;
+      padding: 1rem 0;
+      flex-direction: column;
+      gap: 5px;
+    }
+    header .quizzy-svg, header .q-cube-svg {
+      height: 40px;
+      margin: 0;
+    }
+    header .quizzy-svg {
+      order: 2;
+    }
+    header .q-cube-svg {
+      order: 1;
+    }
+    .game-controls {
+      padding: 10px;
+    }
+    .game-controls input, .game-controls button {
+      width: 100%;
+    }
+    .scoreboard-container {
+      padding: 10px 15px;
+    }
+    .scoreboard-container h2 {
+      font-size: 1.8rem;
+    }
+    .current-player {
+      font-size: 1.1rem;
+    }
+    .scoreboard {
+      font-size: 1rem;
+    }
+    .jeopardy-board {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      padding: 10px;
+    }
+    .jeopardy-category {
+      font-size: 0.9rem;
+      min-height: 40px;
+    }
+    .jeopardy-cell {
+      font-size: 1.2rem;
+      padding: 8px;
+      min-height: 60px;
+    }
+    .question-content {
+      padding: 25px;
+      width: 95%;
+    }
+    .question-content h3 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+    .question-content label {
+      font-size: 1rem;
+      padding: 10px 12px;
+    }
+    .question-content button {
+      padding: 10px 25px;
+      font-size: 1rem;
+    }
+    .feedback-message {
+      font-size: 1.1rem;
+    }
+    footer .q-cube-svg {
+      display: none;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <!-- Q-Cube Logo as SVG in the header - Final Geometry and Q Placement -->
+  <svg class="q-cube-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Isometric Cube Faces -->
+    <!-- Front face -->
+    <polygon points="10,60 60,60 60,10 10,10" fill="#FFFFF0" stroke="#000000" stroke-width="3"/>
+    <!-- Top face -->
+    <polygon points="10,10 35,0 85,0 60,10" fill="#F0F0F0" stroke="#000000" stroke-width="3"/>
+    <!-- Right face -->
+    <polygon points="60,10 85,0 85,50 60,60" fill="#E0E0E0" stroke="#000000" stroke-width="3"/>
+
+    <!-- Q on Front Face - Adjusted for better integration -->
+    <text x="35" y="45" font-family="Arial Black" font-size="40" fill="#000000" text-anchor="middle" dominant-baseline="middle">Q</text>
+
+    <!-- Q on Top Face - Adjusted for better integration and perspective -->
+    <text x="47.5" y="10" font-family="Arial Black" font-size="28" fill="#000000" text-anchor="middle" dominant-baseline="hanging" transform="skewX(-25) translate(0, -5)">Q</text>
+
+    <!-- Q on Right Face - Adjusted for better integration and perspective -->
+    <text x="65" y="32.5" font-family="Arial Black" font-size="28" fill="#000000" text-anchor="middle" dominant-baseline="middle" transform="skewY(25) translate(15, -5)">Q</text>
+  </svg>
+
+  <!-- Quizzy Mascot as SVG in the header - EXACTLY LIKE YOUR IMAGE! -->
+  <svg class="quizzy-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Main rectangle body -->
+    <rect x="10" y="5" width="80" height="90" rx="0" fill="#FFFFF0" stroke="#000000" stroke-width="4"/>
+    <!-- "QUIZZY" text -->
+    <text x="25" y="25" font-family="Comic Neue" font-size="15" font-weight="bold" fill="#000000">QUIZZY</text>
+    <!-- Eyes -->
+    <line x1="38" y1="45" x2="38" y2="48" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+    <line x1="62" y1="45" x2="62" y2="48" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+    <path d="M35 55 Q50 65, 65 55" stroke="#000000" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <!-- Wavy lines below smile -->
+    <path d="M25 70 C35 75, 65 75, 75 70" stroke="#000000" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M20 78 C30 83, 70 83, 80 78" stroke="#000000" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M25 86 C35 91, 65 91, 75 86" stroke="#000000" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <!-- Arms -->
+    <line x1="10" y1="45" x2="0" y2="35" stroke="#000000" stroke-width="3" stroke-linecap="round"/>
+    <line x1="90" y1="45" x2="100" y2="35" stroke="#000000" stroke-width="3" stroke-linecap="round"/>
+    <!-- Legs -->
+    <line x1="30" y1="95" x2="20" y2="100" stroke="#000000" stroke-width="3" stroke-linecap="round"/>
+    <line x1="70" y1="95" x2="80" y2="100" stroke="#000000" stroke-width="3" stroke-linecap="round"/>
+  </svg>
+  Quizinac™ Jeopardy!
+</header>
+
+<main class="jeopardy-game">
+  <div class="game-controls">
+    <div class="player-management">
+      <input type="text" id="newPlayerName" placeholder="Enter Player Name" />
+      <button onclick="addPlayer()">Add Player</button>
+      <button onclick="removePlayer()">Remove Player</button>
+    </div>
+    <div class="manual-points">
+      <input type="number" id="manualPoints" placeholder="Points" value="100" />
+      <button onclick="addManualPoints()">Add Points</button>
+    </div>
+    <div class="turn-control">
+      <button onclick="nextTurn()">Next Player</button>
+    </div>
+  </div>
+
+  <div class="scoreboard-container">
+    <h2>Scoreboard</h2>
+    <div id="currentPlayerDisplay" class="current-player">Current Player: None</div>
+    <ul id="scoreboardList" class="scoreboard">
+      <!-- Player scores will be dynamically inserted here -->
+    </ul>
+  </div>
+
+  <div id="jeopardyBoard" class="jeopardy-board">
+    <!-- Jeopardy board will be dynamically generated here by JavaScript -->
+  </div>
+</main>
+
+<!-- Question Display Overlay (for Quiz & Trivia categories) -->
+<div id="questionOverlay" class="question-overlay" style="display: none;">
+  <div class="question-content">
+    <h3 id="questionText"></h3>
+    <div id="questionOptions" class="options">
+      <!-- Options will be dynamically generated here -->
+    </div>
+    <button onclick="submitAnswer()">Submit Answer</button>
+    <p id="feedbackMessage" class="feedback-message"></p>
+  </div>
+</div>
+
+<!-- Overlay for Random Events (Slow-down, Power-up, Gain/Lose) -->
+<div id="eventOverlay" class="custom-message-box" style="display: none;">
+  <div class="custom-message-content">
+    <p id="eventMessageText"></p>
+    <button onclick="hideOverlayAndAdvanceTurn()">OK</button>
+  </div>
+</div>
+
+<!-- Custom Message Box for general alerts (e.g., "Add players first!") -->
+<div id="customMessageBox" class="custom-message-box" style="display: none;">
+  <div class="custom-message-content">
+    <p id="customMessageText"></p>
+    <button onclick="hideMessageBox()">OK</button>
+  </div>
+</div>
+
+<footer>
+  Made with ♥ by Quizinac™ &nbsp;
+  <!-- Q-Cube Logo in the footer - Final Geometry and Q Placement -->
+  <svg class="q-cube-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Front face -->
+    <polygon points="10,60 60,60 60,10 10,10" fill="#FFFFF0" stroke="#000000" stroke-width="3"/>
+    <!-- Top face -->
+    <polygon points="10,10 35,0 85,0 60,10" fill="#F0F0F0" stroke="#000000" stroke-width="3"/>
+    <!-- Right face -->
+    <polygon points="60,10 85,0 85,50 60,60" fill="#E0E0E0" stroke="#000000" stroke-width="3"/>
+
+    <!-- Q on Front Face -->
+    <text x="35" y="45" font-family="Arial Black" font-size="40" fill="#000000" text-anchor="middle" dominant-baseline="middle">Q</text>
+
+    <!-- Q on Top Face -->
+    <text x="47.5" y="10" font-family="Arial Black" font-size="28" fill="#000000" text-anchor="middle" dominant-baseline="hanging" transform="skewX(-25) translate(0, -5)">Q</text>
+
+    <!-- Q on Right Face -->
+    <text x="65" y="32.5" font-family="Arial Black" font-size="28" fill="#000000" text-anchor="middle" dominant-baseline="middle" transform="skewY(25) translate(15, -5)">Q</text>
+  </svg>
+  <!-- Quizzy Mascot as SVG in the footer - EXACTLY LIKE YOUR IMAGE! -->
+  <svg class="quizzy-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="10" y="5" width="80" height="90" rx="0" fill="#FFFFF0" stroke="#000000" stroke-width="4"/>
+    <text x="25" y="25" font-family="Comic Neue" font-size="15" font-weight="bold" fill="#000000">QUIZZY</text>
+    <line x1="38" y1="45" x2="38" y2="48" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+    <line x1="62" y1="45" x2="62" y2="48" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+    <path d="M35 55 Q50 65, 65 55" stroke="#000000" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <!-- Wavy lines below smile -->
+    <path d="M25 70 C35 75, 65 75, 75 70" stroke="#000000" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M20 78 C30 83, 70 83, 80 78" stroke="#000000" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M25 86 C35 91, 65 91, 75 86" stroke="#000000" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <!-- Arms -->
+    <line x1="10" y1="45" x2="0" y2="35" stroke="#000000" stroke-width="3" stroke-linecap="round"/>
+    <line x1="90" y1="45" x2="100" y2="35" stroke="#000000" stroke-width="3" stroke-linecap="round"/>
+    <!-- Legs -->
+    <line x1="30" y1="95" x2="20" y2="100" stroke="#000000" stroke-width="3" stroke-linecap="round"/>
+    <line x1="70" y1="95" x2="80" y2="100" stroke="#000000" stroke-width="3" stroke-linecap="round"/>
+  </svg>
+</footer>
+
+<script>
+  // Jeopardy Game Data Structure
+  const jeopardyData = {
+    categories: [
+      {
+        name: "Personality Quizzes",
+        type: "full-quiz",
+        quizzes: [
+          {
+            points: 100,
+            title: "Neat or Messy Challenge",
+            quizId: "neatMessy",
+            questions: [
+              { question: "Your favorite color between these two?", options: ["Blue", "Red"], valueMap: {"Blue": 1, "Red": 0}, correctAnswer: "Blue" },
+              { question: "Are you an only child?", options: ["Yes", "No"], valueMap: {"Yes": 1, "No": 0}, correctAnswer: "Yes" },
+              { question: "When do you usually go to sleep?", options: ["Before 10 PM", "After 10 PM"], valueMap: {"Before 10 PM": 1, "After 10 PM": 0}, correctAnswer: "Before 10 PM" }
+            ]
+          },
+          {
+            points: 200,
+            title: "Brave or Fearful Test",
+            quizId: "braveFearful",
+            questions: [
+              { question: "Which environment do you prefer?", options: ["Desert", "Jungle"], valueMap: {"Desert": 1, "Jungle": 0}, correctAnswer: "Desert" },
+              { question: "Which color resonates more with you?", options: ["White", "Blue"], valueMap: {"White": 1, "Blue": 0}, correctAnswer: "White" },
+              { question: "How do you generally feel?", options: ["Happy", "Excited"], valueMap: {"Happy": 1, "Excited": 0}, correctAnswer: "Happy" }
+            ]
+          },
+          {
+            points: 300,
+            title: "What Color Are You Survey",
+            quizId: "whatColor",
+            questions: [
+              { question: "What's your favorite weather?", options: ["Rain", "Clouds", "Sunny", "Snow", "Thunderstorm"], valueMap: {"Rain": 1, "Clouds": 2, "Sunny": 3, "Snow": 4, "Thunderstorm": 5}, correctAnswer: "Rain" },
+              { question: "What's your favorite shape?", options: ["Circle", "Triangle", "Square", "Hexagon", "Rectangle"], valueMap: {"Circle": 1, "Triangle": 2, "Square": 3, "Hexagon": 4, "Rectangle": 5}, correctAnswer: "Circle" },
+              { question: "What’s your favorite utensil?", options: ["Knife", "Spoon", "Spork", "Fork", "Chopsticks"], valueMap: {"Knife": 1, "Spoon": 2, "Spork": 3, "Fork": 4, "Chopsticks": 5}, correctAnswer: "Knife" }
+            ]
+          },
+          {
+            points: 400,
+            title: "Find Your Shape!",
+            quizId: "findYourShape",
+            questions: [
+              { question: "Favorite Color?", options: ["Red", "Green", "Orange", "Blue", "Yellow"], valueMap: { "Red": 1, "Green": 2, "Orange": 3, "Blue": 4, "Yellow": 5 }, correctAnswer: "Red" },
+              { question: "Favorite Weather?", options: ["Rain", "Sunny", "Thunder", "Snowy", "Cloudy"], valueMap: { "Rain": 1, "Sunny": 2, "Thunder": 3, "Snowy": 4, "Cloudy": 5 }, correctAnswer: "Rain" },
+              { question: "Favorite Utensil?", options: ["Spoon", "Spork", "Fork", "Chopsticks", "Knife"], valueMap: { "Spoon": 1, "Spork": 2, "Fork": 3, "Chopsticks": 4, "Knife": 5 }, correctAnswer: "Spoon" }
+            ]
+          },
+          {
+            points: 500,
+            title: "What Emotion are You?",
+            quizId: "whatEmotion",
+            questions: [
+              { question: "Favorite Color?", options: ["Yellow", "Blue", "Orange", "Purple", "Red"], valueMap: { "Yellow": 1, "Blue": 2, "Orange": 3, "Purple": 4, "Red": 5 }, correctAnswer: "Yellow" },
+              { question: "Favorite Shape?", options: ["Square", "Circle", "Star", "Parallelogram", "Triangle"], valueMap: { "Square": 1, "Circle": 2, "Star": 3, "Parallelogram": 4, "Triangle": 5 }, correctAnswer: "Square" },
+              { question: "Favorite Weather?", options: ["Rainy", "Cloudy", "Thunder", "Sunny", "Snow"], valueMap: { "Rainy": 1, "Cloudy": 2, "Thunder": 3, "Sunny": 4, "Snow": 5 }, correctAnswer: "Rainy" }
+            ]
+          },
+          {
+            points: 600,
+            title: "What Weather are you?",
+            quizId: "whatWeather",
+            questions: [
+              { question: "Favorite Color?", options: ["Green", "Red", "Blue", "Orange", "Purple"], valueMap: { "Green": 1, "Red": 2, "Blue": 3, "Orange": 4, "Purple": 5 }, correctAnswer: "Green" },
+              { question: "Favorite Shape?", options: ["Square", "Circle", "Diamond", "Star", "Triangle"], valueMap: { "Square": 1, "Circle": 2, "Diamond": 3, "Star": 4, "Triangle": 5 }, correctAnswer: "Square" },
+              { question: "Favorite Music?", options: ["Hip-hop", "Jazz", "Pop", "Rock", "Classical"], valueMap: { "Hip-hop": 1, "Jazz": 2, "Pop": 3, "Rock": 4, "Classical": 5 }, correctAnswer: "Hip-hop" }
+            ]
+          },
+          {
+            points: 700,
+            title: "What House Suits You?",
+            quizId: "whatHouse",
+            questions: [
+              { question: "Favorite Color?", options: ["Yellow", "Blue", "Green", "Red", "Orange"], valueMap: { "Yellow": 1, "Blue": 2, "Green": 3, "Red": 4, "Orange": 5 }, correctAnswer: "Yellow" },
+              { question: "Favorite music?", options: ["Jazz", "Pop", "Rock", "Classical", "Hip-hop"], valueMap: { "Jazz": 1, "Pop": 2, "Rock": 3, "Classical": 4, "Hip-hop": 5 }, correctAnswer: "Jazz" },
+              { question: "Favorite animal?", options: ["Fish", "Reptiles", "Mammal", "Bird", "Amphibians"], valueMap: { "Fish": 1, "Reptiles": 2, "Mammal": 3, "Bird": 4, "Amphibians": 5 }, correctAnswer: "Fish" }
+            ]
+          }
+        ]
+      },
+      {
+        name: "General Trivia",
+        type: "trivia",
+        questions: [
+          { points: 100, question: "Which large animal is known for its long memory and trunks?", options: ["Giraffe", "Elephant", "Rhinoceros", "Hippopotamus"], correctAnswer: "Elephant" },
+          { points: 200, question: "What is the smallest planet in our solar system?", options: ["Mars", "Mercury", "Venus", "Pluto (dwarf planet)"], correctAnswer: "Mercury" },
+          { points: 300, question: "Which famous scientist developed the theory of relativity?", options: ["Isaac Newton", "Marie Curie", "Albert Einstein", "Stephen Hawking"], correctAnswer: "Albert Einstein" },
+          { points: 400, question: "What is the capital of France?", options: ["Berlin", "Madrid", "Paris", "Rome"], correctAnswer: "Paris" },
+          { points: 500, question: "Which planet is known as the Red Planet?", options: ["Earth", "Mars", "Jupiter", "Venus"], correctAnswer: "Mars" },
+          { points: 600, question: "Who painted the Mona Lisa?", options: ["Vincent van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Claude Monet"], correctAnswer: "Leonardo da Vinci" },
+          { points: 700, question: "What is the largest ocean on Earth?", options: ["Atlantic", "Indian", "Arctic", "Pacific"], correctAnswer: "Pacific" }
+        ]
+      },
+      {
+        name: "Point Shifter",
+        type: "event-shifter", // New type for distinct event handling
+        events: [ // Renamed from questions to events for clarity
+          { points: 100, description: "Small point gain!", action: "gain" },
+          { points: 200, description: "Small point loss!", action: "lose" },
+          { points: 300, description: "Do the Chicken Dance!", action: "chicken_dance" },
+          { points: 400, description: "Bail Out of Something Unpleasant!", action: "bail_out" },
+          { points: 500, description: "Extra Turn!", action: "extra_turn" },
+          { points: 600, description: "Lose a Turn!", action: "lose_turn" },
+          { points: 700, description: "Random Point Change!", action: "random_points" } // Can be random gain/lose
+        ]
+      }
+    ]
+  };
+
+  let players = [];
+  let currentPlayerIndex = 0;
+  let activeJeopardyCell = null; // Stores { catIndex, qIndex, points, cellElement }
+  let currentFullQuizState = {
+    quizData: null,
+    currentQuestionIndex: 0,
+    answers: [] // Stores answers for the current full quiz
+  };
+
+  const answeredCells = new Set(); // Stores "catIndex-qIndex" strings for answered cells
+
+  // DOM Elements
+  const jeopardyBoard = document.getElementById('jeopardyBoard');
+  const questionOverlay = document.getElementById('questionOverlay');
+  const questionTextElement = document.getElementById('questionText');
+  const questionOptionsElement = document.getElementById('questionOptions');
+  const feedbackMessageElement = document.getElementById('feedbackMessage');
+  const customMessageBox = document.getElementById('customMessageBox');
+  const customMessageText = document.getElementById('customMessageText');
+  const newPlayerNameInput = document.getElementById('newPlayerName');
+  const manualPointsInput = document.getElementById('manualPoints');
+  const scoreboardList = document.getElementById('scoreboardList');
+  const currentPlayerDisplay = document.getElementById('currentPlayerDisplay');
+  const eventOverlay = document.getElementById('eventOverlay');
+  const eventMessageText = document.getElementById('eventMessageText');
+
+
+  // --- Helper Functions for Overlays ---
+  function showMessageBox(message) {
+    customMessageText.textContent = message;
+    customMessageBox.style.display = 'flex';
+  }
+
+  function hideMessageBox() {
+    customMessageBox.style.display = 'none';
+  }
+
+  // New generic function to hide event overlay and advance turn based on count
+  function hideOverlayAndAdvanceTurn(advanceCount = 1) {
+    eventOverlay.style.display = 'none';
+    for (let i = 0; i < advanceCount; i++) {
+        nextTurn();
+    }
+    checkGameOver();
+  }
+
+
+  // --- Player & Scoreboard Management ---
+  function addPlayer() {
+    const name = newPlayerNameInput.value.trim();
+    if (name) {
+      const existingPlayer = players.find(p => p.name.toLowerCase() === name.toLowerCase());
+      if (existingPlayer) {
+        showMessageBox(`Player "${name}" already exists!`);
+        return;
+      }
+      players.push({ name: name, score: 0 });
+      newPlayerNameInput.value = '';
+      updateScoreboard();
+      if (players.length === 1) {
+        updateCurrentPlayerDisplay();
+      }
+    } else {
+      showMessageBox("Please enter a player name.");
+    }
+  }
+
+  function removePlayer() {
+    const nameToRemove = newPlayerNameInput.value.trim();
+    if (!nameToRemove) {
+        showMessageBox("Please enter the name of the player to remove.");
+        return;
+    }
+
+    const initialPlayerCount = players.length;
+    const playerIndexToRemove = players.findIndex(p => p.name.toLowerCase() === nameToRemove.toLowerCase());
+
+    if (playerIndexToRemove === -1) {
+        showMessageBox(`Player "${nameToRemove}" not found.`);
+        return;
+    }
+
+    // Remove the player
+    players.splice(playerIndexToRemove, 1);
+
+    // Adjust currentPlayerIndex if the removed player was the current one
+    // or if a player before the current one was removed
+    if (players.length > 0) {
+        if (currentPlayerIndex >= players.length) {
+            currentPlayerIndex = 0; // Reset to first player if current index is out of bounds
+        } else if (playerIndexToRemove <= currentPlayerIndex && players.length > 0) {
+             // If a player at or before the current index was removed, adjust current index
+            currentPlayerIndex = currentPlayerIndex % players.length; // Ensures it wraps correctly
+        }
+    } else {
+        currentPlayerIndex = 0; // No players left
+    }
+
+    newPlayerNameInput.value = ''; // Clear input field
+    updateScoreboard();
+    showMessageBox(`Player "${nameToRemove}" has been removed.`);
+
+    // If game has started and all cells are answered and player is removed, check game over condition again.
+    checkGameOver();
+  }
+
+
+  function updateScoreboard() {
+    scoreboardList.innerHTML = '';
+    if (players.length === 0) {
+      scoreboardList.innerHTML = '<li>No players yet. Add some!</li>';
+      currentPlayerDisplay.textContent = 'Current Player: None';
+      return;
+    }
+    const sortedPlayers = [...players].sort((a, b) => b.score - a.score);
+
+    sortedPlayers.forEach((player, index) => {
+      const li = document.createElement('li');
+      li.textContent = `${player.name}: $${player.score}`;
+      const playerOriginalIndex = players.findIndex(p => p.name === player.name);
+      if (playerOriginalIndex === currentPlayerIndex) {
+        li.style.fontWeight = 'bold';
+        li.style.color = '#000080';
+        li.style.backgroundColor = '#FFFDEA';
+        li.style.borderRadius = '5px';
+        li.style.padding = '5px';
+      }
+      scoreboardList.appendChild(li);
+    });
+    updateCurrentPlayerDisplay();
+  }
+
+  function updateCurrentPlayerDisplay() {
+    if (players.length > 0) {
+      currentPlayerDisplay.textContent = `Current Player: ${players[currentPlayerIndex].name}`;
+    } else {
+      currentPlayerDisplay.textContent = 'Current Player: None';
+    }
+  }
+
+  function nextTurn() {
+    if (players.length === 0) {
+      showMessageBox("Please add players first to change turn!");
+      return;
+    }
+    currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+    updateScoreboard();
+  }
+
+  function addManualPoints() {
+    if (players.length === 0) {
+      showMessageBox("Please add players first!");
+      return;
+    }
+    const points = parseInt(manualPointsInput.value);
+    if (!isNaN(points) && points !== 0) {
+      players[currentPlayerIndex].score += points;
+      updateScoreboard();
+      showMessageBox(`${players[currentPlayerIndex].name} manually adjusted score by ${points} points!`);
+    } else {
+      showMessageBox("Please enter a valid number of points.");
+    }
+    manualPointsInput.value = '100';
+  }
+
+
+  // --- Jeopardy Board Rendering ---
+  function renderBoard() {
+    jeopardyBoard.innerHTML = '';
+    // Determine the number of rows based on the longest category
+    const pointValues = [100, 200, 300, 400, 500, 600, 700]; // Defined here for local scope
+
+    jeopardyBoard.style.gridTemplateColumns = `repeat(${jeopardyData.categories.length}, 1fr)`;
+
+    jeopardyData.categories.forEach(category => {
+      const categoryHeader = document.createElement('div');
+      categoryHeader.classList.add('jeopardy-category');
+      categoryHeader.textContent = category.name;
+      jeopardyBoard.appendChild(categoryHeader);
+    });
+
+    for (let qIndex = 0; qIndex < pointValues.length; qIndex++) {
+      jeopardyData.categories.forEach((category, catIndex) => {
+        const cell = document.createElement('div');
+        cell.classList.add('jeopardy-cell');
+        cell.textContent = `$${pointValues[qIndex]}`;
+        cell.dataset.categoryIndex = catIndex;
+        cell.dataset.questionIndex = qIndex; // This is the 'row' index (0, 1, 2 for 100, 200, 300, etc.)
+        cell.dataset.points = pointValues[qIndex];
+        cell.dataset.type = category.type;
+
+        const cellId = `${catIndex}-${qIndex}`;
+        if (answeredCells.has(cellId)) {
+          cell.classList.add('answered');
+          cell.textContent = '';
+        } else {
+          // Check if a question/quiz exists for this cell before attaching event listener
+          let contentExists = false;
+          if (category.type === 'full-quiz' && category.quizzes[qIndex]) {
+              contentExists = true;
+          } else if (category.type === 'trivia' && category.questions[qIndex]) {
+              contentExists = true;
+          } else if (category.type === 'event-shifter' && category.events[qIndex]) { // Check for events
+              contentExists = true;
+          }
+
+          if (contentExists) {
+              cell.addEventListener('click', () => handleCellClick(cell));
+          } else {
+              // If no content exists for this cell, make it unclickable and visually distinct
+              cell.classList.add('answered'); // Treat as answered to disable click
+              cell.textContent = 'N/A'; // Or some other indicator
+              cell.style.cursor = 'not-allowed';
+          }
+        }
+        jeopardyBoard.appendChild(cell);
+      });
+    }
+  }
+
+
+  // --- Main Cell Click Event Handler ---
+  function handleCellClick(cellElement) {
+    if (players.length === 0) {
+      showMessageBox("Please add players before starting the game!");
+      return;
+    }
+
+    const catIndex = parseInt(cellElement.dataset.categoryIndex);
+    const qIndex = parseInt(cellElement.dataset.questionIndex); // Row index (0, 1, 2)
+    const points = parseInt(cellElement.dataset.points);
+    const categoryType = cellElement.dataset.type;
+
+    // Check if the specific content exists for the clicked cell's point value
+    let contentExists = false;
+    let contentData = null;
+
+    if (categoryType === 'full-quiz' && jeopardyData.categories[catIndex].quizzes[qIndex]) {
+        contentExists = true;
+        contentData = jeopardyData.categories[catIndex].quizzes[qIndex];
+    } else if (categoryType === 'trivia' && jeopardyData.categories[catIndex].questions[qIndex]) {
+        contentExists = true;
+        contentData = jeopardyData.categories[catIndex].questions[qIndex];
+    } else if (categoryType === 'event-shifter' && jeopardyData.categories[catIndex].events[qIndex]) {
+        contentExists = true;
+        contentData = jeopardyData.categories[catIndex].events[qIndex];
+    }
+
+    if (!contentExists || !contentData) {
+        showMessageBox("This cell currently has no content assigned. Please pick another.");
+        return;
+    }
+
+    const cellId = `${catIndex}-${qIndex}`;
+    if (answeredCells.has(cellId)) {
+      return; // Do nothing if already answered
+    }
+
+    activeJeopardyCell = { catIndex, qIndex, points, cellElement };
+
+    // Mark cell as answered immediately
+    answeredCells.add(cellId);
+    cellElement.classList.add('answered');
+    cellElement.textContent = '';
+
+    switch (categoryType) {
+      case "full-quiz":
+        startFullQuiz(contentData, points);
+        break;
+      case "trivia":
+        triggerSingleQuestion(contentData, points);
+        break;
+      case "event-shifter":
+        handlePointShifterEvent(contentData, points); // Call the new handler
+        break;
+    }
+  }
+
+
+  // --- Single Question Logic (for Trivia) ---
+  function triggerSingleQuestion(questionData, points) {
+    questionTextElement.textContent = questionData.question;
+    questionOptionsElement.innerHTML = '';
+    feedbackMessageElement.textContent = '';
+    feedbackMessageElement.className = 'feedback-message';
+
+    questionData.options.forEach((optionText) => {
+      const label = document.createElement('label');
+      const input = document.createElement('input');
+      input.type = 'radio';
+      input.name = 'jeopardyOption'; // Generic name for single questions
+      input.value = optionText;
+      label.appendChild(input);
+      label.append(document.createTextNode(optionText));
+      questionOptionsElement.appendChild(label);
+    });
+
+    questionOverlay.dataset.mode = 'single-question';
+    questionOverlay.dataset.correctAnswer = questionData.correctAnswer;
+    questionOverlay.dataset.points = points;
+    questionOverlay.style.display = 'flex';
+  }
+
+
+  // --- Full Quiz Logic (for Personality Quizzes) ---
+  function startFullQuiz(quizData, cellPoints) {
+    currentFullQuizState = {
+      quizData: quizData,
+      currentQuestionIndex: 0,
+      answers: [], // Stores selected answers for this full quiz
+      cellPoints: cellPoints // Store the points associated with the Jeopardy cell
+    };
+    displayNextFullQuizQuestion();
+  }
+
+  function displayNextFullQuizQuestion() {
+    const quiz = currentFullQuizState.quizData;
+    const qIndex = currentFullQuizState.currentQuestionIndex;
+
+    if (qIndex < quiz.questions.length) {
+      const questionData = quiz.questions[qIndex];
+      questionTextElement.textContent = `(${quiz.title} - Question ${qIndex + 1}/${quiz.questions.length}) ${questionData.question}`;
+      questionOptionsElement.innerHTML = '';
+      feedbackMessageElement.textContent = ''; // Clear feedback for each sub-question
+      feedbackMessageElement.className = 'feedback-message'; // Reset classes
+
+      // Use a unique name for radio buttons for each question in the full quiz
+      const radioGroupName = `quizQuestion_${qIndex}`;
+
+      questionData.options.forEach((optionText) => {
+        const label = document.createElement('label');
+        const input = document.createElement('input');
+        input.type = 'radio';
+        input.name = radioGroupName;
+        input.value = optionText;
+        label.appendChild(input);
+        label.append(document.createTextNode(optionText));
+        questionOptionsElement.appendChild(label);
+      });
+
+      questionOverlay.dataset.mode = 'full-quiz';
+      questionOverlay.style.display = 'flex';
+    } else {
+      endFullQuiz();
+    }
+  }
+
+  function endFullQuiz() {
+    const currentPlayer = players[currentPlayerIndex];
+    const cellPoints = currentFullQuizState.cellPoints;
+    const quizId = currentFullQuizState.quizData.quizId;
+    const quizQuestions = currentFullQuizState.quizData.questions;
+    const answers = currentFullQuizState.answers;
+
+    const result = calculatePersonalityResult(quizId, quizQuestions, answers); // Get outcome and score effect
+
+    let messageClass = '';
+    if (result.scoreEffect === 1) {
+        eventMessageText.textContent = `${result.outcome} for ${currentPlayer.name}! 🎉`;
+        messageClass = 'correct';
+    } else if (result.scoreEffect === -1) {
+        eventMessageText.textContent = `${result.outcome} for ${currentPlayer.name}. 😬`;
+        messageClass = 'incorrect';
+    } else {
+        eventMessageText.textContent = `${result.outcome} for ${currentPlayer.name}. 😐`;
+        messageClass = 'neutral';
+    }
+    eventMessageText.classList.add(messageClass);
+
+
+    updateScoreboard();
+
+    questionOverlay.style.display = 'none'; // Hide quiz overlay
+    eventOverlay.style.display = 'flex'; // Show event overlay with quiz result
+    // Clear the message class after a delay if it was set
+    setTimeout(() => {
+        eventMessageText.classList.remove('correct', 'incorrect', 'neutral');
+    }, 2000); // Display feedback for 2 seconds
+
+    // Reset full quiz state
+    currentFullQuizState.quizData = null;
+    currentFullQuizState.currentQuestionIndex = 0;
+    currentFullQuizState.answers = [];
+    currentFullQuizState.cellPoints = 0;
+
+    // After a full quiz, always advance the turn by 1
+    hideOverlayAndAdvanceTurn(1);
+  }
+
+  // New function to calculate personality quiz results based on collected answers
+  function calculatePersonalityResult(quizId, quizQuestions, answers) {
+    let outcome = '';
+    let scoreEffect = 0; // 1 for gain, -1 for loss, 0 for neutral
+
+    switch (quizId) {
+      case "neatMessy":
+        let neatCount = 0;
+        let messyCount = 0;
+        if (answers[0] === "Blue") neatCount++; else messyCount++;
+        if (answers[1] === "Yes") neatCount++; else messyCount++;
+        if (answers[2] === "Before 10 PM") neatCount++; else messyCount++;
+
+        if (neatCount > messyCount) {
+          outcome = 'You are Neat! ✨';
+          scoreEffect = 1;
+        } else if (messyCount > neatCount) {
+          outcome = 'You are Messy!  ';
+          scoreEffect = -1;
+        } else {
+          outcome = 'You are a mix of Neat and Messy! ⚖️';
+          scoreEffect = 0;
+        }
+        break;
+      case "braveFearful":
+        let braveCount = 0;
+        let fearfulCount = 0;
+        if (answers[0] === "Desert") braveCount++; else fearfulCount++;
+        if (answers[1] === "White") braveCount++; else fearfulCount++;
+        if (answers[2] === "Happy") braveCount++; else fearfulCount++;
+
+        if (braveCount > fearfulCount) {
+          outcome = 'You are Brave! 🦁';
+          scoreEffect = 1;
+        } else if (fearfulCount > braveCount) {
+          outcome = 'You are Fearful! 🛡️';
+          scoreEffect = -1;
+        } else {
+          outcome = 'You are both Brave and Fearful! 🤔';
+          scoreEffect = 0;
+        }
+        break;
+      case "whatColor":
+        const weatherMap = quizQuestions[0].valueMap;
+        const shapeMap = quizQuestions[1].valueMap;
+        const utensilMap = quizQuestions[2].valueMap;
+
+        let total = 0;
+        total += weatherMap[answers[0]] || 0;
+        total += shapeMap[answers[1]] || 0;
+        total += utensilMap[answers[2]] || 0;
+
+        let colorResult = '';
+        if (total >= 3 && total <= 5) colorResult = 'RED';
+        else if (total >= 6 && total <= 8) colorResult = 'ORANGE';
+        else if (total >= 9 && total <= 11) colorResult = 'GREEN';
+        else if (total >= 12 && total <= 14) colorResult = 'BLUE';
+        else if (total >= 15) colorResult = 'PURPLE';
+
+        if (colorResult === 'GREEN') {
+            outcome = `You are ${colorResult}! 🌈`;
+            scoreEffect = 1;
+        } else if (colorResult === 'RED') {
+            outcome = `You are ${colorResult}! 🔴`;
+            scoreEffect = -1;
+        } else {
+            outcome = `You are ${colorResult}! 🟡`;
+            scoreEffect = 0;
+        }
+        break;
+      case "findYourShape":
+        const colorShapeMap = quizQuestions[0].valueMap;
+        const weatherShapeMap = quizQuestions[1].valueMap;
+        const utensilShapeMap = quizQuestions[2].valueMap;
+        let shapeTotal = 0;
+        shapeTotal += colorShapeMap[answers[0]] || 0;
+        shapeTotal += weatherShapeMap[answers[1]] || 0;
+        shapeTotal += utensilShapeMap[answers[2]] || 0;
+
+        let shapeResult = '';
+        if (shapeTotal >= 3 && shapeTotal <= 5) shapeResult = 'Circle';
+        else if (shapeTotal >= 6 && shapeTotal <= 8) shapeResult = 'Square';
+        else if (shapeTotal >= 9 && shapeTotal <= 11) shapeResult = 'Triangle';
+        else if (shapeTotal >= 12 && shapeTotal <= 14) shapeResult = 'Diamond';
+        else if (shapeTotal >= 15) shapeResult = 'Star';
+
+        if (shapeResult === 'Star' || shapeResult === 'Diamond') {
+            outcome = `You are a ${shapeResult}! ✨`;
+            scoreEffect = 1;
+        } else if (shapeResult === 'Circle') {
+            outcome = `You are a ${shapeResult}! ⚪`;
+            scoreEffect = -1;
+        } else {
+            outcome = `You are a ${shapeResult}! 🟦`;
+            scoreEffect = 0;
+        }
+        break;
+      case "whatEmotion":
+        const colorVibeMap = quizQuestions[0].valueMap;
+        const shapeVibeMap = quizQuestions[1].valueMap;
+        const weatherVibeMap = quizQuestions[2].valueMap;
+        let vibeTotal = 0;
+        vibeTotal += colorVibeMap[answers[0]] || 0;
+        vibeTotal += shapeVibeMap[answers[1]] || 0;
+        vibeTotal += weatherVibeMap[answers[2]] || 0;
+
+        let vibeResult = '';
+        if (vibeTotal >= 3 && vibeTotal <= 5) vibeResult = 'Happy';
+        else if (vibeTotal >= 6 && vibeTotal <= 8) vibeResult = 'Sad';
+        else if (vibeTotal >= 9 && vibeTotal <= 11) vibeResult = 'Anxious';
+        else if (vibeTotal >= 12 && vibeTotal <= 14) vibeResult = 'Excited';
+        else if (vibeTotal >= 15) vibeResult = 'Angry';
+
+        if (vibeResult === 'Happy' || vibeResult === 'Excited') {
+            outcome = `You feel ${vibeResult}! 😊`;
+            scoreEffect = 1;
+        } else if (vibeResult === 'Sad' || vibeResult === 'Angry') {
+            outcome = `You feel ${vibeResult}! 😠`;
+            scoreEffect = -1;
+        } else {
+            outcome = `You feel ${vibeResult}! 😐`;
+            scoreEffect = 0;
+        }
+        break;
+      case "whatWeather":
+        const colorWeatherMap = quizQuestions[0].valueMap;
+        const shapeWeatherMap = quizQuestions[1].valueMap;
+        const musicWeatherMap = quizQuestions[2].valueMap;
+        let weatherTotal = 0;
+        weatherTotal += colorWeatherMap[answers[0]] || 0;
+        weatherTotal += shapeWeatherMap[answers[1]] || 0;
+        weatherTotal += musicWeatherMap[answers[2]] || 0;
+
+        let weatherResult = '';
+        if (weatherTotal >= 3 && weatherTotal <= 5) weatherResult = 'Sunny';
+        else if (weatherTotal >= 6 && weatherTotal <= 8) weatherResult = 'Rainy';
+        else if (weatherTotal >= 9 && weatherTotal <= 11) weatherResult = 'Snowy';
+        else if (weatherTotal >= 12 && weatherTotal <= 14) weatherResult = 'Cloudy';
+        else if (weatherTotal >= 15) weatherResult = 'Thunder';
+
+        if (weatherResult === 'Sunny') {
+            outcome = `You are ${weatherResult} weather! ☀️`;
+            scoreEffect = 1;
+        } else if (weatherResult === 'Thunder' || weatherResult === 'Rainy') {
+            outcome = `You are ${weatherResult} weather! ⛈️`;
+            scoreEffect = -1;
+        } else {
+            outcome = `You are ${weatherResult} weather! ☁️`;
+            scoreEffect = 0;
+        }
+        break;
+      case "whatHouse":
+        const colorHomeMap = quizQuestions[0].valueMap;
+        const musicHomeMap = quizQuestions[1].valueMap;
+        const animalHomeMap = quizQuestions[2].valueMap;
+        let homeTotal = 0;
+        homeTotal += colorHomeMap[answers[0]] || 0;
+        homeTotal += musicHomeMap[answers[1]] || 0;
+        homeTotal += animalHomeMap[answers[2]] || 0;
+
+        let homeResult = '';
+        if (homeTotal >= 3 && homeTotal <= 5) homeResult = 'a Beach House';
+        else if (homeTotal >= 6 && homeTotal <= 8) homeResult = 'a Mansion';
+        else if (homeTotal >= 9 && homeTotal <= 11) homeResult = 'a Treehouse';
+        else if (homeTotal >= 12 && homeTotal <= 14) homeResult = 'an Apartment';
+        else if (homeTotal >= 15) homeResult = 'a Hut';
+
+        if (homeResult === 'a Mansion' || homeResult === 'a Treehouse') {
+            outcome = `You belong in ${homeResult}! 🏡`;
+            scoreEffect = 1;
+        } else if (homeResult === 'a Hut') {
+            outcome = `You belong in ${homeResult}! 🛖`;
+            scoreEffect = -1;
+        } else {
+            outcome = `You belong in ${homeResult}! 🏘️`;
+            scoreEffect = 0;
+        }
+        break;
+    }
+    return { outcome: outcome, scoreEffect: scoreEffect };
+  }
+
+
+  // --- Point Shifter Logic (Auto Gain/Lose & Events) ---
+  function handlePointShifterEvent(eventData, points) {
+    const player = players[currentPlayerIndex];
+    let message = eventData.description;
+    let messageClass = '';
+    let advanceTurnCount = 1; // Default to advancing turn by 1
+
+    switch (eventData.action) {
+        case "gain":
+            player.score += points;
+            message = `${player.name}! You gained $${points}! 🎉`;
+            messageClass = 'correct';
+            break;
+        case "lose":
+            player.score -= points;
+            message = `${player.name}! You lost $${points}! 😬`;
+            messageClass = 'incorrect';
+            break;
+        case "chicken_dance":
+            message = `${player.name}! Time to do the Chicken Dance! 🐔🕺`;
+            messageClass = 'neutral';
+            break;
+        case "bail_out":
+            message = `${player.name}! You've bailed out of something unpleasant! Phew! 💨`;
+            messageClass = 'neutral';
+            break;
+        case "extra_turn":
+            message = `${player.name}! You earned an extra turn! Play again! ✨`;
+            messageClass = 'correct';
+            advanceTurnCount = 0; // Do not advance turn
+            break;
+        case "lose_turn":
+            message = `${player.name}! You lost a turn! 😩`;
+            messageClass = 'incorrect';
+            advanceTurnCount = 2; // Advance turn twice (skips current player's next turn)
+            break;
+        case "random_points":
+            const randomAmount = Math.floor(Math.random() * points) + 50; // Random amount up to 'points' + 50 for variety
+            const isGain = Math.random() < 0.5;
+            if (isGain) {
+                player.score += randomAmount;
+                message = `${player.name}! Randomly gained $${randomAmount}! 🍀`;
+                messageClass = 'correct';
+            } else {
+                player.score -= randomAmount;
+                message = `${player.name}! Randomly lost $${randomAmount}! 💸`;
+                messageClass = 'incorrect';
+            }
+            break;
+        default:
+            message = `${player.name}! An unexpected event occurred!`;
+            messageClass = 'neutral';
+            break;
+    }
+
+    eventMessageText.textContent = message;
+    eventMessageText.classList.add(messageClass);
+
+    updateScoreboard();
+    eventOverlay.style.display = 'flex';
+
+    // Store advanceTurnCount so hideOverlayAndAdvanceTurn knows how many times to call nextTurn()
+    eventOverlay.dataset.advanceCount = advanceTurnCount;
+
+    // Clear the message class after a delay if it was set
+    setTimeout(() => {
+        eventMessageText.classList.remove('correct', 'incorrect', 'neutral');
+    }, 2000);
+  }
+
+
+  // --- Answer Submission & Turn Progression ---
+  function submitAnswer() {
+    // Determine the radio button group name dynamically
+    const mode = questionOverlay.dataset.mode;
+    let selectedOption;
+
+    if (mode === 'full-quiz') {
+        const radioGroupName = `quizQuestion_${currentFullQuizState.currentQuestionIndex}`;
+        selectedOption = document.querySelector(`input[name="${radioGroupName}"]:checked`);
+    } else { // single-question mode
+        selectedOption = document.querySelector('input[name="jeopardyOption"]:checked');
+    }
+
+
+    if (!selectedOption) {
+      showMessageBox("Please select an answer!");
+      return;
+    }
+
+    // No direct score change for trivia/personality quizzes on answer submission
+    // Score changes are only via manual "Add Points" button or automated "Point Shifter"
+
+    if (mode === 'single-question') {
+      let isCorrect = selectedOption.value === questionOverlay.dataset.correctAnswer;
+
+      if (isCorrect) {
+        feedbackMessageElement.textContent = `Correct! 🎉`;
+        feedbackMessageElement.classList.add('correct');
+      } else {
+        feedbackMessageElement.textContent = `Incorrect! The answer was "${questionOverlay.dataset.correctAnswer}". 😬`;
+        feedbackMessageElement.classList.add('incorrect');
+      }
+
+      updateScoreboard();
+
+      setTimeout(() => {
+        questionOverlay.style.display = 'none';
+        activeJeopardyCell = null;
+        feedbackMessageElement.classList.remove('correct', 'incorrect'); // Clear feedback class
+        hideOverlayAndAdvanceTurn(1); // Advance turn by 1 for single questions
+      }, 2500);
+
+    } else if (mode === 'full-quiz') {
+      // Store the answer for the current sub-question
+      currentFullQuizState.answers[currentFullQuizState.currentQuestionIndex] = selectedOption.value;
+
+      // Move to next question in the full quiz or end it
+      currentFullQuizState.currentQuestionIndex++;
+      setTimeout(() => {
+        if (currentFullQuizState.currentQuestionIndex < currentFullQuizState.quizData.questions.length) {
+          displayNextFullQuizQuestion();
+        } else {
+          endFullQuiz(); // End the full quiz when all questions are answered
+        }
+      }, 500); // Short delay before next question or ending quiz
+    }
+  }
+
+
+  // --- Game Over Logic ---
+  function checkGameOver() {
+    // Each category has 7 cells now
+    const pointValues = [100, 200, 300, 400, 500, 600, 700];
+    // Calculate total possible cells based on *current* categories
+    const totalPossibleCells = jeopardyData.categories.length * pointValues.length;
+
+    if (answeredCells.size === totalPossibleCells) {
+      setTimeout(() => {
+        let finalMessage = "Game Over!\n\nFinal Scores:\n";
+        players.forEach(player => {
+            finalMessage += `${player.name}: $${player.score}\n`;
+        });
+        if (players.length > 0) {
+            // Find winner based on current (manually adjusted) scores
+            const winner = players.reduce((prev, current) => (prev.score > current.score) ? prev : current);
+            const topScore = winner.score;
+            const winners = players.filter(p => p.score === topScore);
+            if (winners.length > 1) {
+                finalMessage += `\nIt's a tie! Winners: ${winners.map(w => w.name).join(' & ')} with $${topScore}! 🏆`;
+            } else {
+                finalMessage += `\n🎉 The winner is ${winner.name} with $${winner.score}! 🎉`;
+            }
+        } else {
+            finalMessage += "\nNo players left to declare a winner. Add players to play again!";
+        }
+        showMessageBox(finalMessage);
+      }, 500);
+    }
+  }
+
+
+  // --- Initial Setup on Page Load ---
+  document.addEventListener('DOMContentLoaded', () => {
+    renderBoard();
+    questionOverlay.style.display = 'none';
+    eventOverlay.style.display = 'none';
+    customMessageBox.style.display = 'none';
+    updateScoreboard();
+
+    // Attach event listener for the OK button on the event overlay
+    eventOverlay.querySelector('button').addEventListener('click', () => {
+        const advanceCount = parseInt(eventOverlay.dataset.advanceCount || '1');
+        hideOverlayAndAdvanceTurn(advanceCount);
+    });
+  });
+</script>
+
+</body>
+</html>
+ 
